@@ -75,7 +75,7 @@ extern class Faxe
 	public static function fmod_get_param(eventName:String, paramName:String):Float;
 
 	@:native("linc::faxe::faxe_set_event_param")
-	public static function fmod_set_param(eventName:String, paramName:String, sValue:Float):Void;
+	public static function fmod_set_param(eventName:String, paramName:String, sValue:Float):Bool;
 	
 	@:native("linc::faxe::faxe_get_system")
 	public static function fmod_get_system() : Ptr<FmodSystem>;

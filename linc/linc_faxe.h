@@ -164,7 +164,7 @@ namespace linc
 		 * \param[paramName] ::String the name of the param to SET
 		 * \param[sValue] float the new value to set the param to
 		 */
-		extern void faxe_set_event_param(const ::String& eventName, const ::String& paramName, float sValue);
+		extern bool faxe_set_event_param(const ::String& eventName, const ::String& paramName, float sValue);
 
 		//// Channel operations
 		extern void faxe_stop_all_channels();

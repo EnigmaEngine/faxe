@@ -394,9 +394,14 @@ namespace linc
 				if (result != FMOD_OK)
 				{
 					if(faxe_debug) printf("FMOD failed to SET PARAM %s of event instance %s with error %s\n", paramName.c_str(), eventName.c_str(), FMOD_ErrorString(result));
+					return false;
 				}
+
+				// Success.
+				return true;
 			} else {
 				if(faxe_debug) printf("Event %s is not loaded!\n", eventName.c_str());
+				return false;
 			}
 		}
 
