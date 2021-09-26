@@ -173,79 +173,33 @@ namespace linc
 			if(faxe_debug && res ) printf("error playing\n");
 			return res;
 		}
-
-		FMOD_RESULT faxe_load_sound_from_memory(value soundData, const ::String& sndName)
-		{
-			// Get haxe.io.Bytes.b (the actual byte data).
-    	value _b = val_field (soundData, val_id ("b"));
-    	int length = val_int (val_field (soundData, val_id ("length")));
-
-			if (val_is_null(soundData)) {
-				if(faxe_debug) printf("FMOD failed to play sound, data was null");
-				return;
-			}
-			if (length == 0) {
-				if(faxe_debug) printf("FMOD failed to play sound, data was empty");
-				return;
-			}
-
-			unsigned char* soundBytes;
-			if (val_is_string (_b)) {
-				soundBytes = (unsigned char*)val_string (_b);
-			} else {
-				soundBytes = (unsigned char*)buffer_data (val_to_buffer (_b));
-			}
-
-			FMOD_MODE loadSndMode = FMOD_DEFAULT;
-			loadSndMode |= FMOD_LOOP_OFF;
-
-			// Build sound info.
-			// @see https://fmod.com/resources/documentation-api?version=2.02&page=core-api-system.html#fmod_createsoundexinfo
-			FMOD_CREATESOUNDEXINFO exinfo;
-    	memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
-    	exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO); // Size of this structure.
-    	exinfo.length = length; // Length of data in memory.
-
-			// Try and load this sound
-			FMOD::Sound* tempSound;
-			auto result = fmodLowLevelSoundSystem->createSound(soundBytes, loadSndMode, &exinfo, &tempSound);
-			if (result != FMOD_OK)
-			{
-				if(faxe_debug) printf("FMOD failed to LOAD sound %s with error %s\n", sndName.c_str(), FMOD_ErrorString(result));
-				return result;
-			}
-
-			// Store in loaded sounds map
-			loadedSounds[sndName] = tempSound;
-			return result;
-		}
 		
 		FMOD_RESULT F_CALLBACK pcmreadcallback(FMOD_SOUND* /*sound*/, void *data, unsigned int datalen)
 		{
-		    static float  t1 = 0, t2 = 0;        // time
-		    static float  v1 = 0, v2 = 0;        // velocity
-		    signed short *stereo16bitbuffer = (signed short *)data;
+				static float  t1 = 0, t2 = 0;        // time
+				static float  v1 = 0, v2 = 0;        // velocity
+				signed short *stereo16bitbuffer = (signed short *)data;
 
-		    for (unsigned int count = 0; count < (datalen >> 2); count++)     // >>2 = 16bit stereo (4 bytes per sample)
-		    {
-		        *stereo16bitbuffer++ = (signed short)(Common_Sin(t1) * 32767.0f);    // left channel
-		        *stereo16bitbuffer++ = (signed short)(Common_Sin(t2) * 32767.0f);    // right channel
+				for (unsigned int count = 0; count < (datalen >> 2); count++)     // >>2 = 16bit stereo (4 bytes per sample)
+				{
+						*stereo16bitbuffer++ = (signed short)(sin(t1) * 32767.0f);    // left channel
+						*stereo16bitbuffer++ = (signed short)(sin(t2) * 32767.0f);    // right channel
 
-		        t1 += 0.01f   + v1;
-		        t2 += 0.0142f + v2;
-		        v1 += (float)(Common_Sin(t1) * 0.002f);
-		        v2 += (float)(Common_Sin(t2) * 0.002f);
-		    }
+						t1 += 0.01f   + v1;
+						t2 += 0.0142f + v2;
+						v1 += (float)(sin(t1) * 0.002f);
+						v2 += (float)(sin(t2) * 0.002f);
+				}
 
-		    return FMOD_OK;
+				return FMOD_OK;
 		}
 
 		FMOD_RESULT F_CALLBACK pcmsetposcallback(FMOD_SOUND* sound, int subsound, unsigned int position, FMOD_TIMEUNIT postype)
 		{
-		    /*
-		      This is useful if the user calls Channel::setPosition and you want to seek your data accordingly.
-		    */
-		    return FMOD_OK;
+				/*
+					This is useful if the user calls Channel::setPosition and you want to seek your data accordingly.
+				*/
+				return FMOD_OK;
 		}
 
 		FMOD_RESULT faxe_load_sound_from_callback(const ::String& sndName, int frequency)
@@ -256,15 +210,15 @@ namespace linc
 			// Build sound info.
 			// @see https://fmod.com/resources/documentation-api?version=2.02&page=core-api-system.html#fmod_createsoundexinfo
 			FMOD_CREATESOUNDEXINFO exinfo;
-    	memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
-    	exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);  /* Required. Size of this structure. */
-      exinfo.numchannels       = 2;          /* Number of channels in the sound. */
-	    exinfo.defaultfrequency  = frequency;  /* Default playback rate of sound. */
-    	exinfo.decodebuffersize  = frequency;  /* Chunk size of stream update in samples. This will be the amount of data passed to the user callback. */
-    	exinfo.length            = exinfo.defaultfrequency * exinfo.numchannels * sizeof(signed short) * 5; /* Length of PCM data in bytes of whole song (for Sound::getLength) */
-    	exinfo.format            = FMOD_SOUND_FORMAT_PCM16; /* Data format of sound. */
-    	exinfo.pcmreadcallback   = pcmreadcallback;         /* User callback for reading. */
-    	exinfo.pcmsetposcallback = pcmsetposcallback;       /* User callback for seeking. */
+			memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+			exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);  /* Required. Size of this structure. */
+			exinfo.numchannels       = 2;          /* Number of channels in the sound. */
+			exinfo.defaultfrequency  = frequency;  /* Default playback rate of sound. */
+			exinfo.decodebuffersize  = frequency;  /* Chunk size of stream update in samples. This will be the amount of data passed to the user callback. */
+			exinfo.length            = exinfo.defaultfrequency * exinfo.numchannels * sizeof(signed short) * 5; /* Length of PCM data in bytes of whole song (for Sound::getLength) */
+			exinfo.format            = FMOD_SOUND_FORMAT_PCM16; /* Data format of sound. */
+			exinfo.pcmreadcallback   = pcmreadcallback;         /* User callback for reading. */
+			exinfo.pcmsetposcallback = pcmsetposcallback;       /* User callback for seeking. */
 
 			// Try and load this sound
 			FMOD::Sound* tempSound;

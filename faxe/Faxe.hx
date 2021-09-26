@@ -49,11 +49,8 @@ extern class Faxe
 	
 	@:native("linc::faxe::faxe_play_sound")
 	public static function fmod_play_sound(soundName:String, paused:Bool = false):FmodResult;
-
-  @:native("linc::faxe::faxe_load_sound_from_memory")
-	public static function fmod_load_sound_from_memory(soundData:haxe.io.Bytes, soundName:String):FmodResult;
 	
-  @:native("linc::faxe::faxe_load_sound_from_callback")
+	@:native("linc::faxe::faxe_load_sound_from_callback")
 	public static function fmod_load_sound_from_callback(soundName:String, frequency:Int):FmodResult;
 
 	@:native("linc::faxe::faxe_play_sound_with_handle")
@@ -221,22 +218,11 @@ extern class Faxe
 
 
 @:enum abstract FmodStudioPlaybackState(Int) from Int to Int {
-  var FMOD_STUDIO_PLAYBACK_PLAYING = 0;
-  var FMOD_STUDIO_PLAYBACK_SUSTAINING = 1;
-  var FMOD_STUDIO_PLAYBACK_STOPPED = 2;
-  var FMOD_STUDIO_PLAYBACK_STARTING = 3;
-  var FMOD_STUDIO_PLAYBACK_STOPPING = 4;
-}
-
-@:enum abstract FmodTimeUnit(Int) from Int to Int {
-  var FMOD_TIMEUNIT_MS             = 0x00000001;
-  var FMOD_TIMEUNIT_PCM            = 0x00000002;
-  var FMOD_TIMEUNIT_PCMBYTES       = 0x00000004;
-  var FMOD_TIMEUNIT_RAWBYTES       = 0x00000008;
-  var FMOD_TIMEUNIT_PCMFRACTION    = 0x00000010;
-  var FMOD_TIMEUNIT_MODORDER       = 0x00000100;
-  var FMOD_TIMEUNIT_MODROW         = 0x00000200;
-  var FMOD_TIMEUNIT_MODPATTERN     = 0x00000400;
+	var FMOD_STUDIO_PLAYBACK_PLAYING = 0;
+	var FMOD_STUDIO_PLAYBACK_SUSTAINING = 1;
+	var FMOD_STUDIO_PLAYBACK_STOPPED = 2;
+	var FMOD_STUDIO_PLAYBACK_STARTING = 3;
+	var FMOD_STUDIO_PLAYBACK_STOPPING = 4;
 }
 
 @:keep
@@ -402,7 +388,7 @@ class FaxeRef {
 	@:generic
 	@:extern
 	public static inline function nullptrR<T>() : RawPtr<T> {
-    return cast null;
+		return cast null;
 	}
 	
 	public static function playSoundWithHandle(snd:FmodSoundRef, ?paused : Bool = false) 
@@ -449,8 +435,8 @@ extern class FmodCreateSoundExInfo {
  * @see https://fmod.com/resources/documentation-api?version=2.02&page=glossary.html#sample-data
  * @see https://fmod.com/resources/documentation-api?version=2.02&page=core-api-sound.html#fmod_sound_pcmread_callback
  */
-typedef FmodSoundPCMReadCallback = (Ptr<FmodSound>, cpp.UInt32) -> FMOD_RESULT;
+typedef FmodSoundPCMReadCallback = (Ptr<FmodSound>, cpp.UInt32) -> FmodResult;
 /**
  * @see https://fmod.com/resources/documentation-api?version=2.02&page=core-api-sound.html#fmod_sound_pcmsetpos_callback
  */
-typedef FmodSoundPCMSetPosCallback = (Ptr<FmodSound>, cpp.Int32, cpp.UInt32, FmodTimeUnit) -> FMOD_RESULT;
+typedef FmodSoundPCMSetPosCallback = (Ptr<FmodSound>, cpp.Int32, cpp.UInt32, FmodTimeUnit) -> FmodResult;

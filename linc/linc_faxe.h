@@ -84,16 +84,11 @@ namespace linc
 		 * plays a sound without further ado
 		 */
 		extern FMOD_RESULT faxe_play_sound(const ::String& sndName, bool paused = false);
-
-		/**
-		 * Loads a sound with just the bytes and stores it with a name.
-		 */
-		extern FMOD_RESULT faxe_load_sound_from_memory(value soundData, const ::String& sndName);
 		
 		/**
 		 * Regularly runs a callback function requesting sound data to play.
 		 */
-		extern FMOD_RESULT faxe_load_sound_from_callback(const ::String& sndName, int frequency = 44100)
+		extern FMOD_RESULT faxe_load_sound_from_callback(const ::String& sndName, int frequency = 44100);
 
 		extern FMOD_RESULT faxe_play_sound_with_handle( FMOD::Sound * snd);
 		
