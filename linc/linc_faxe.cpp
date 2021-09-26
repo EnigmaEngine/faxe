@@ -383,7 +383,7 @@ namespace linc
 		}
 
 
-		void faxe_set_event_param(const ::String& eventName, const ::String& paramName, float sValue)
+		bool faxe_set_event_param(const ::String& eventName, const ::String& paramName, float sValue)
 		{
 			auto targetEvent = loadedEvents.find(eventName);
 			if (targetEvent != loadedEvents.end())
