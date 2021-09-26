@@ -59,6 +59,12 @@ extern class Faxe
 	@:native("linc::faxe::faxe_stop_event")
 	public static function fmod_stop_event(eventName:String, forceStop:Bool):Void;
 
+	@:native("linc::faxe::faxe_pause_event")
+	public static function fmod_pause_event(eventName:String, forceStop:Bool):Void;
+
+	@:native("linc::faxe::faxe_event_paused")
+	public static function fmod_event_paused(eventName:String):Bool;
+
 	@:native("linc::faxe::faxe_event_playing")
 	public static function fmod_event_is_playing(eventName:String):Bool;
 

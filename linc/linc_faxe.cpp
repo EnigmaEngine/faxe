@@ -69,7 +69,7 @@ namespace linc
 
 			// All OK - Setup some channels to work with!
 			fmodSoundSystem->initialize(numChannels, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr);
-      // ERIC: The LowLevel API has been renamed to Core API, other than that it should still function the same way it previously has.
+			// ERIC: The LowLevel API has been renamed to Core API, other than that it should still function the same way it previously has.
 			fmodSoundSystem->getCoreSystem(&fmodLowLevelSoundSystem);
 			if(faxe_debug) printf("FMOD Sound System Started with %d channels!\n", numChannels);
 		}
@@ -99,7 +99,7 @@ namespace linc
 
 			// List is as loaded
 			loadedBanks[bankName] = tempBank;
-      return true;
+			return true;
 		}
 
 		void faxe_unload_bank(const ::String& bankName)
@@ -294,7 +294,7 @@ namespace linc
 			}
 		}
 
-    FMOD_STUDIO_PLAYBACK_STATE faxe_get_event_state(const ::String& eventName)
+		FMOD_STUDIO_PLAYBACK_STATE faxe_get_event_state(const ::String& eventName)
 		{
 			auto targetEvent = loadedEvents.find(eventName);
 			if (targetEvent != loadedEvents.end())
@@ -323,7 +323,7 @@ namespace linc
 			{
 				// Try and get the float param from EventInstance
 				float currentValue;
-        // Studio::EventInstance::getParameterValue is now Studio::EventInstance::getParameterByName
+				// Studio::EventInstance::getParameterValue is now Studio::EventInstance::getParameterByName
 				auto result = targetEvent->second->getParameterByName(paramName.c_str(), &currentValue);
 
 				if (result != FMOD_OK)
@@ -339,12 +339,56 @@ namespace linc
 			}
 		}
 
+		bool faxe_event_paused(const ::String& eventName)
+		{
+			auto targetEvent = loadedEvents.find(eventName);
+			if (targetEvent != loadedEvents.end())
+			{
+				// Try and get the paused param from EventInstance
+				bool currentValue;
+				auto result = targetEvent->second->getPaused(&currentValue);
+
+				if (result != FMOD_OK)
+				{
+					if(faxe_debug) printf("FMOD failed to GET pause status of event instance %s with error %s\n", eventName.c_str(), FMOD_ErrorString(result));
+					return false;
+				}
+
+				return currentValue;
+			} else {
+				if(faxe_debug) printf("Event %s is not loaded!\n", eventName.c_str());
+				return false;
+			}
+		}
+
+		bool faxe_pause_event(const ::String& eventName, bool shouldPause)
+		{
+			auto targetEvent = loadedEvents.find(eventName);
+			if (targetEvent != loadedEvents.end())
+			{
+				auto result = targetEvent->second->setPaused(shouldPause);
+
+				if (result != FMOD_OK)
+				{
+					if(faxe_debug) printf("FMOD failed to SET pause status to %s of event instance %s with error %s\n", shouldPause ? "true" : "false", eventName.c_str(), FMOD_ErrorString(result));
+					return false;
+				}
+
+				// Success.
+				return true;
+			} else {
+				if(faxe_debug) printf("Event %s is not loaded!\n", eventName.c_str());
+				return false;
+			}
+		}
+
+
 		void faxe_set_event_param(const ::String& eventName, const ::String& paramName, float sValue)
 		{
 			auto targetEvent = loadedEvents.find(eventName);
 			if (targetEvent != loadedEvents.end())
 			{
-        // Studio::EventInstance::setParameterValue is now Studio::EventInstance::setParameterByName
+				// Studio::EventInstance::setParameterValue is now Studio::EventInstance::setParameterByName
 				auto result = targetEvent->second->setParameterByName(paramName.c_str(), sValue);
 
 				if (result != FMOD_OK)

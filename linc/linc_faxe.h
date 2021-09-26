@@ -62,7 +62,7 @@ namespace linc
 		/**
 		 * Load a FMOD sound bank file
 		 * \param[bankName] ::String the file path of the sound bank to load
-     * \return ::Whether loading was successful.
+		 * \return ::Whether loading was successful.
 		 */
 		extern bool faxe_load_bank(const ::String& bankName);
 
@@ -121,7 +121,6 @@ namespace linc
 		 */
 		extern void faxe_stop_event(const ::String& eventName, bool forceStop = false);
 
-
 		/**
 		 * Check to see if an event is currently playing
 		 * \param[eventName] ::String the name of the event to check playing status of
@@ -129,13 +128,27 @@ namespace linc
 		 */
 		extern bool faxe_event_playing(const ::String& eventName);
 
-    /**
+		/**
 		 * Check the playback state of a given event
 		 * \param[eventName] ::String the name of the event to check playback state of
 		 * \return ::FMOD_STUDIO_PLAYBACK_STATE the status of the event.
-     * \see https://fmod.com/resources/documentation-api?version=2.02&page=studio-api-common.html#fmod_studio_playback_state
+		 * \see https://fmod.com/resources/documentation-api?version=2.02&page=studio-api-common.html#fmod_studio_playback_state
 		 */
 		extern FMOD_STUDIO_PLAYBACK_STATE faxe_get_event_state(const ::String& eventName);
+
+		/**
+		 * Check to see if an event is currently paused
+		 * \param[eventName] ::String the name of the event to check pause status of
+		 * \return ::Bool if the event is currently paused
+		 */
+		extern bool faxe_event_paused(const ::String& eventName);
+
+		/**
+		 * Attempt to pause the playing sound event.
+		 * \param[eventName] ::String the name of the event to set pause status of
+		 * \return ::Bool if the pause was successful
+		 */
+		extern bool faxe_pause_event(const ::String& eventName, bool shouldPause = true);
 
 		/**
 		 * Check to see if an event is currently playing
