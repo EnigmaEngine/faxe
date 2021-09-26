@@ -21,7 +21,7 @@ extern class Faxe
 	public static function fmod_update():Void;
 
 	@:native("linc::faxe::faxe_load_bank")
-	public static function fmod_load_bank(bankFilePath:String):Void;
+	public static function fmod_load_bank(bankFilePath:String):Bool;
 
 	@:native("linc::faxe::faxe_unload_bank")
 	public static function fmod_unload_bank(bankFilePath:String):Void;

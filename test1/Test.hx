@@ -11,11 +11,13 @@ class Test
 
 		// Make sure to load the STRINGS file to enable loading 
 		// stuff by FMOD Path
-		Faxe.fmod_load_bank("./MasterBank.strings.bank");
+		var result = Faxe.fmod_load_bank("./MasterBank.strings.bank");
+
+    trace(result);
 
 		// Load a test event
-		Faxe.fmod_load_event("event:/testEvent","toto");
-		Faxe.fmod_play_event("event:/testEvent");
+		Faxe.fmod_load_event("event:/FreakyMenu","toto");
+		Faxe.fmod_play_event("event:/FreakyMenu");
 
 		// Get and set an even parameter to change effect values
 		trace("Lowpass param defaults to: " + Faxe.fmod_get_param("event:/testEvent", "Lowpass"));
@@ -25,7 +27,7 @@ class Test
 		// Bad little forever loop to pump FMOD commands
 		while (true)
 		{
-			trace("event:/testEvent is playing: " + Faxe.fmod_event_is_playing("event:/testEvent"));
+			// trace("event:/testEvent is playing: " + Faxe.fmod_event_is_playing("event:/testEvent"));
 			Faxe.fmod_update();
 		}
 	}

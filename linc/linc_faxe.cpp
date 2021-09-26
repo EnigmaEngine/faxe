@@ -80,12 +80,12 @@ namespace linc
 		}
 
 		//// Sound Banks
-		void faxe_load_bank(const ::String& bankName)
+		bool faxe_load_bank(const ::String& bankName)
 		{
 			// Ensure this isn't already loaded
 			if (loadedBanks.find(bankName) != loadedBanks.end())
 			{
-				return;
+				return true;
 			}
 
 			// Try and load the bank file
@@ -94,11 +94,12 @@ namespace linc
 			if (result != FMOD_OK)
 			{
 				if(faxe_debug) printf("FMOD failed to LOAD sound bank %s with error %s\n", bankName.c_str(), FMOD_ErrorString(result));
-				return;
+				return false;
 			}
 
 			// List is as loaded
 			loadedBanks[bankName] = tempBank;
+      return true;
 		}
 
 		void faxe_unload_bank(const ::String& bankName)
