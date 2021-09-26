@@ -1,6 +1,11 @@
 package faxe;
 
+#if cpp
 private typedef Ptr<T> = cpp.Pointer<T>;
+private typedef RawPtr<T> = cpp.RawPointer<T>;
+private typedef ConstCharStar = cpp.ConstCharStar;
+private typedef Float32 = cpp.Float32;
+private typedef UInt32 = cpp.UInt32;
 
 @:keep
 @:include('linc_faxe.h')
@@ -32,7 +37,7 @@ extern class Faxe
 	 * get registerd sounds
 	 */
 	@:native("linc::faxe::faxe_get_sound")
-	public static function fmod_get_sound(soundPath:String):cpp.Pointer<FmodSound>;
+	public static function fmod_get_sound(soundPath:String):Ptr<FmodSound>;
 	
 	@:native("linc::faxe::faxe_unload_sound")
 	public static function fmod_unload_sound(bankFilePath:String):Void;
@@ -47,10 +52,10 @@ extern class Faxe
 	public static function fmod_play_sound(soundName:String, paused:Bool = false):FmodResult;
 	
 	@:native("linc::faxe::faxe_play_sound_with_handle")
-	public static function fmod_play_sound_with_handle(snd : cpp.Pointer<FmodSound>):FmodResult;
+	public static function fmod_play_sound_with_handle(snd : Ptr<FmodSound>):FmodResult;
 	
 	@:native("linc::faxe::faxe_play_sound_with_channel")
-	public static function fmod_play_sound_with_channel(soundName:String, paused:Bool): cpp.Pointer<FmodChannel>;
+	public static function fmod_play_sound_with_channel(soundName:String, paused:Bool): Ptr<FmodChannel>;
 
 	@:native("linc::faxe::faxe_stop_event")
 	public static function fmod_stop_event(eventName:String, forceStop:Bool):Void;
@@ -65,7 +70,7 @@ extern class Faxe
 	public static function fmod_set_param(eventName:String, paramName:String, sValue:Float):Void;
 	
 	@:native("linc::faxe::faxe_get_system")
-	public static function fmod_get_system() : cpp.Pointer<FmodSystem>;
+	public static function fmod_get_system() : Ptr<FmodSystem>;
 	
 	@:native("linc::faxe::faxe_set_debug")
 	public static function fmod_set_debug(onOff : Bool):Void;
@@ -205,10 +210,10 @@ extern class Faxe
 @:native("FMOD::Sound")
 extern class FmodSound {
 	@:native('getMode')
-	function getMode( mode : cpp.Pointer<FmodMode> ) : FmodResult;
+	function getMode( mode : Ptr<FmodMode> ) : FmodResult;
 	
 	@:native('getLoopCount')
-	function getLoopCount( nb:cpp.Pointer<Int> ) : FmodResult;
+	function getLoopCount( nb:Ptr<Int> ) : FmodResult;
 	
 	@:native('setLoopCount')
 	function setLoopCount( nb:Int ) : FmodResult;
@@ -217,13 +222,13 @@ extern class FmodSound {
 	function setMode( mode:FmodMode ) : FmodResult;
 	
 	@:native('getPosition')
-	function getPosition( position : cpp.Pointer<cpp.UInt32>, postype : FmodTimeUnit ) : FmodResult;
+	function getPosition( position : Ptr<UInt32>, postype : FmodTimeUnit ) : FmodResult;
 	
 	@:native('setPosition')
-	function setPosition( position : cpp.UInt32, postype : FmodTimeUnit ) : FmodResult;
+	function setPosition( position : UInt32, postype : FmodTimeUnit ) : FmodResult;
 	
 	@:native('getLength')
-	function getLength( len : cpp.Pointer<cpp.UInt32>, postype : FmodTimeUnit ) : FmodResult;
+	function getLength( len : Ptr<UInt32>, postype : FmodTimeUnit ) : FmodResult;
 	
 	//use faxe release to fully release memory... 
 	@:native('release')
@@ -248,16 +253,16 @@ extern class FmodSoundRef extends FmodSound {}
 extern class FmodChannel {
 	
 	@:native('getVolume')
-	function getVolume( volume : cpp.Pointer<cpp.Float32> ) : FmodResult;
+	function getVolume( volume : Ptr<Float32> ) : FmodResult;
 	
 	@:native('setVolume')
-	function setVolume( volume : cpp.Float32 ) : FmodResult;
+	function setVolume( volume : Float32 ) : FmodResult;
 	
 	@:native('getPosition')
-	function getPosition( position : cpp.Pointer<cpp.UInt32>, postype : FmodTimeUnit ) : FmodResult;
+	function getPosition( position : Ptr<UInt32>, postype : FmodTimeUnit ) : FmodResult;
 	
 	@:native('setPosition')
-	function setPosition( position : cpp.UInt32, postype : FmodTimeUnit ) : FmodResult;
+	function setPosition( position : UInt32, postype : FmodTimeUnit ) : FmodResult;
 	
 	/**
 	 * Stops the channel (or all channels in the channel group) from playing. Makes it available for re-use by the priority system.
@@ -269,13 +274,13 @@ extern class FmodChannel {
 	function release() : FmodResult;
 	
 	@:native('isPlaying')
-	function isPlaying( isPlaying : cpp.Pointer<Bool> ) : FmodResult;
+	function isPlaying( isPlaying : Ptr<Bool> ) : FmodResult;
 	
 	@:native('getMode')
-	function getMode( mode : cpp.Pointer<FmodMode> ) : FmodResult;
+	function getMode( mode : Ptr<FmodMode> ) : FmodResult;
 	
 	@:native('getLoopCount')
-	function getLoopCount( nb:cpp.Pointer<Int> ) : FmodResult;
+	function getLoopCount( nb:Ptr<Int> ) : FmodResult;
 	
 	@:native('setLoopCount')
 	function setLoopCount( nb:Int ) : FmodResult;
@@ -284,7 +289,7 @@ extern class FmodChannel {
 	function setMode( mode:FmodMode ) : FmodResult;
 	
 	@:native('getPaused')
-	function getPaused( paused : cpp.Pointer<Bool> ) : FmodResult;
+	function getPaused( paused : Ptr<Bool> ) : FmodResult;
 	
 	@:native('setPaused')
 	function setPaused( paused : Bool ) : FmodResult;
@@ -308,25 +313,25 @@ extern class FmodSystem {
 	
 	@:native('createSound')
 	function createSound( 
-		name_or_data : cpp.ConstCharStar, 
+		name_or_data : ConstCharStar, 
 		mode : FmodMode, 
-		createExInfo : cpp.Pointer<FmodCreateSoundExInfo>, 
-		sound:cpp.RawPointer<cpp.RawPointer<FmodSound>>) : FmodResult;
+		createExInfo : Ptr<FmodCreateSoundExInfo>, 
+		sound:RawPtr<RawPtr<FmodSound>>) : FmodResult;
 		
 		
 	@:native('getSoundRAM')
 	function getSoundRAM(
-		currentAlloced:cpp.Pointer<Int>,
-		maxAlloced:cpp.Pointer<Int>,
-		total:cpp.Pointer<Int>
+		currentAlloced:Ptr<Int>,
+		maxAlloced:Ptr<Int>,
+		total:Ptr<Int>
 	) : FmodResult;
 	
 	@:native('playSound')
 	function playSound(
-		sound 			: cpp.Pointer<FmodSound>,
-		channelgroup 	: cpp.Pointer<FmodChannelGroup>,
+		sound 			: Ptr<FmodSound>,
+		channelgroup 	: Ptr<FmodChannelGroup>,
 		paused 			: Bool,
-		channel			: cpp.RawPointer<cpp.RawPointer<FmodChannel>>
+		channel			: RawPtr<RawPtr<FmodChannel>>
 	) : FmodResult;
 }
 
@@ -340,13 +345,13 @@ extern class FmodSystemRef extends FmodSystem {}
 class FaxeRef {
 	@:extern
 	public static inline function getSystem() : FmodSystemRef{
-		var ptr : cpp.Pointer<FmodSystem> = Faxe.fmod_get_system();
+		var ptr : Ptr<FmodSystem> = Faxe.fmod_get_system();
 		return cast ptr.ref;
 	}
 	
 	@:extern
 	public static inline function playSound(name:String, ?paused = false) : FmodChannelRef {
-		var ptr : cpp.Pointer<FmodChannel> = Faxe.fmod_play_sound_with_channel(name,paused);
+		var ptr : Ptr<FmodChannel> = Faxe.fmod_play_sound_with_channel(name,paused);
 		return cast ptr.ref;
 	}
 	
@@ -356,27 +361,27 @@ class FaxeRef {
 	
 	@:generic
 	@:extern
-	public static inline function nullptr<T>() : cpp.Pointer<T> {
+	public static inline function nullptr<T>() : Ptr<T> {
 		return cast null;
 	}
 	
 	@:generic
 	@:extern
-	public static inline function nullptrR<T>() : cpp.RawPointer<T> {
-		return cast null;
+	public static inline function nullptrR<T>() : RawPtr<T> {
+    return cast null;
 	}
 	
 	public static function playSoundWithHandle(snd:FmodSoundRef, ?paused : Bool = false) 
-		: cpp.Pointer<FmodChannel> 
+		: Ptr<FmodChannel> 
 	{
 		var fmod : FmodSystemRef = getSystem();
 		
-		var cgroup : cpp.Pointer<FmodChannelGroup> = nullptr();
-		var chan : cpp.RawPointer<FmodChannel> = nullptrR();
-		var chanPtr : cpp.RawPointer<cpp.RawPointer<FmodChannel>> = cpp.RawPointer.addressOf(chan);
+		var cgroup : Ptr<FmodChannelGroup> = nullptr();
+		var chan : RawPtr<FmodChannel> = nullptrR();
+		var chanPtr : RawPtr<RawPtr<FmodChannel>> = RawPtr.addressOf(chan);
 		
 		//Reference are actually pointers !
-		var sndPtr : cpp.Pointer<FmodSound> = cast snd;
+		var sndPtr : Ptr<FmodSound> = cast snd;
 		
 		var res = fmod.playSound( sndPtr, cgroup, paused, chanPtr );
 		
@@ -392,7 +397,7 @@ class FaxeRef {
 	
 	@:extern
 	public static inline function getSound(name:String) : FmodSoundRef {
-		var ptr : cpp.Pointer<FmodSound> = Faxe.fmod_get_sound(name);
+		var ptr : Ptr<FmodSound> = Faxe.fmod_get_sound(name);
 		return cast ptr.ref;
 	}
 }
@@ -403,3 +408,4 @@ class FaxeRef {
 extern class FmodCreateSoundExInfo {
 	
 }
+#end
