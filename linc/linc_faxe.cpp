@@ -31,6 +31,10 @@
 
 #include "linc_faxe.h"
 
+/**
+ * Update to 2.x requires minor refactors.
+ * @see https://fmod.com/resources/documentation-api?version=2.02&page=welcome-whats-new-200.html
+ */
 namespace linc 
 {
 	namespace faxe
@@ -65,7 +69,8 @@ namespace linc
 
 			// All OK - Setup some channels to work with!
 			fmodSoundSystem->initialize(numChannels, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr);
-			fmodSoundSystem->getLowLevelSystem(&fmodLowLevelSoundSystem);
+      // ERIC: The LowLevel API has been renamed to Core API, other than that it should still function the same way it previously has.
+			fmodSoundSystem->getCoreSystem(&fmodLowLevelSoundSystem);
 			if(faxe_debug) printf("FMOD Sound System Started with %d channels!\n", numChannels);
 		}
 
@@ -295,7 +300,8 @@ namespace linc
 			{
 				// Try and get the float param from EventInstance
 				float currentValue;
-				auto result = targetEvent->second->getParameterValue(paramName.c_str(), &currentValue);
+        // Studio::EventInstance::getParameterValue is now Studio::EventInstance::getParameterByName
+				auto result = targetEvent->second->getParameterByName(paramName.c_str(), &currentValue);
 
 				if (result != FMOD_OK)
 				{
@@ -315,7 +321,8 @@ namespace linc
 			auto targetEvent = loadedEvents.find(eventName);
 			if (targetEvent != loadedEvents.end())
 			{
-				auto result = targetEvent->second->setParameterValue(paramName.c_str(), sValue);
+        // Studio::EventInstance::setParameterValue is now Studio::EventInstance::setParameterByName
+				auto result = targetEvent->second->setParameterByName(paramName.c_str(), sValue);
 
 				if (result != FMOD_OK)
 				{

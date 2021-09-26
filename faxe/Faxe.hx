@@ -1,6 +1,5 @@
 package faxe;
 
-#if cpp
 private typedef Ptr<T> = cpp.Pointer<T>;
 private typedef RawPtr<T> = cpp.RawPointer<T>;
 private typedef ConstCharStar = cpp.ConstCharStar;
@@ -408,4 +407,3 @@ class FaxeRef {
 extern class FmodCreateSoundExInfo {
 	
 }
-#end
