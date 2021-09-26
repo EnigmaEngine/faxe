@@ -74,8 +74,8 @@
 		</section>
 		
 		<section if="windows HXCPP_M64" >
-			<copyFile name="fmod64.dll" from="${NATIVE_TOOLKIT_PATH}/api/x64" toolId="exe" allowMissing="false"/>
-			<copyFile name="fmodstudio64.dll" from="${NATIVE_TOOLKIT_PATH}/api/x64" toolId="exe" allowMissing="false"/>
+			<copyFile name="fmod.dll" from="${NATIVE_TOOLKIT_PATH}/api/x64" toolId="exe" allowMissing="false"/>
+			<copyFile name="fmodstudio.dll" from="${NATIVE_TOOLKIT_PATH}/api/x64" toolId="exe" allowMissing="false"/>
 		</section>
 	</section>
 	
