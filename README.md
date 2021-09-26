@@ -1,6 +1,4 @@
 # faxe
-FMOD Audio Engine for Haxe
+FAXE is a Haxe wrapper for the multi-platform FMOD Audio System.
 
-I have continued the work of Aaron Shea and modernized it a bit to play fmod io low level stuff. ( see https://github.com/AaronShea/faxe )
-
-LICENCE : MIT
+The library code itself is under the MIT License. By downloading the DLLs included in this library, you agree to abide by the [FMOD Studio End User License Agreement](https://www.fmod.com/legal).

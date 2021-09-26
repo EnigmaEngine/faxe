@@ -1,13 +1,18 @@
 {
-	"name" : "faxe",
-	"url" : "https://github.com/delahee/faxe/",
-	"license" : "MIT",
-	"tags": ["fmod","audio","crossplatform"],
-	
-    "description" : "cpp fmod binding",
-    "version" : "0.0.66",
-	"releasenote" : "",
-	"contributors" : ["delahee"],
-    "dependencies" : { }
+  "name": "faxe",
+  "url": "https://github.com/delahee/faxe/",
+  "license": "MIT",
+  "tags": [
+    "fmod",
+    "audio",
+    "crossplatform"
+  ],
+  "description": "cpp fmod binding",
+  "version": "0.1.0",
+  "releasenote": "",
+  "contributors": [
+    "MasterEric",
+    "delahee"
+  ],
+  "dependencies": {}
 }
-
