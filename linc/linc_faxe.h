@@ -129,6 +129,14 @@ namespace linc
 		 */
 		extern bool faxe_event_playing(const ::String& eventName);
 
+    /**
+		 * Check the playback state of a given event
+		 * \param[eventName] ::String the name of the event to check playback state of
+		 * \return ::FMOD_STUDIO_PLAYBACK_STATE the status of the event.
+     * \see https://fmod.com/resources/documentation-api?version=2.02&page=studio-api-common.html#fmod_studio_playback_state
+		 */
+		extern FMOD_STUDIO_PLAYBACK_STATE faxe_get_event_state(const ::String& eventName);
+
 		/**
 		 * Check to see if an event is currently playing
 		 * \param[eventName] ::String the name of the event to get param value from

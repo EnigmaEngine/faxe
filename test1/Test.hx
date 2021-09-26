@@ -18,6 +18,8 @@ class Test
 		// Load a test event
 		Faxe.fmod_load_event("event:/FreakyMenu","toto");
 		Faxe.fmod_play_event("event:/FreakyMenu");
+    var state = Faxe.fmod_get_event_state("event:/FreakyMenu");
+    trace(state);
 
 		// Get and set an even parameter to change effect values
 		trace("Lowpass param defaults to: " + Faxe.fmod_get_param("event:/testEvent", "Lowpass"));

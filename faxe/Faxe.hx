@@ -62,6 +62,9 @@ extern class Faxe
 	@:native("linc::faxe::faxe_event_playing")
 	public static function fmod_event_is_playing(eventName:String):Bool;
 
+	@:native("linc::faxe::faxe_get_event_state")
+	public static function fmod_get_event_state(eventName:String):FmodStudioPlaybackState;
+
 	@:native("linc::faxe::faxe_get_event_param")
 	public static function fmod_get_param(eventName:String, paramName:String):Float;
 
@@ -202,6 +205,15 @@ extern class Faxe
 	var FMOD_LOWMEM  			 			= 0x08000000;
 	var FMOD_LOADSECONDARYRAM  			 	= 0x20000000;
 	var FMOD_VIRTUAL_PLAYFROMSTART 			= 0x80000000;
+}
+
+
+@:enum abstract FmodStudioPlaybackState(Int) from Int to Int {
+  var FMOD_STUDIO_PLAYBACK_PLAYING = 0;
+  var FMOD_STUDIO_PLAYBACK_SUSTAINING = 1;
+  var FMOD_STUDIO_PLAYBACK_STOPPED = 2;
+  var FMOD_STUDIO_PLAYBACK_STARTING = 3;
+  var FMOD_STUDIO_PLAYBACK_STOPPING = 4;
 }
 
 @:keep
