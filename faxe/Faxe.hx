@@ -423,16 +423,11 @@ class FaxeRef {
 }
 
 @:keep
-@:structAccess
 @:include('linc_faxe.h')
 @:native("FMOD_CREATESOUNDEXINFO")
 extern class FmodCreateSoundExInfo {
 	
 }
-
-@:native("cpp::Struct<FmodCreateSoundExInfo>")
-extern class WrappedRectangle extends Rectangle { }
-
 
 /**
  * FMod will continously run this callback, expecting that sample data be provided.
